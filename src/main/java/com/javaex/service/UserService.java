@@ -13,10 +13,21 @@ public class UserService {
 	private UserDao userDao;
 	
 	//로그인
-	public void exeLogin(UserVo userVo) {
+	public UserVo exeLogin(UserVo userVo) {
 		System.out.println("userService.exeLogin()");
 		
-		userDao.userSelectByIdPw(userVo);
+		UserVo authuser = userDao.userSelectByIdPw(userVo);
+		
+		return authuser;
+	}
+	
+	//회원가입
+	public int exejoin(UserVo userVo) {
+		System.out.println("userService.exejoin()");
+		
+		int count = userDao.userInsert(userVo);
+		
+		return count;
 	}
 	
 }
