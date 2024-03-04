@@ -16,9 +16,9 @@ public class UserService {
 	public UserVo exeLogin(UserVo userVo) {
 		System.out.println("userService.exeLogin()");
 		
-		UserVo authuser = userDao.userSelectByIdPw(userVo);
+		UserVo authUser = userDao.userSelectByIdPw(userVo);
 		
-		return authuser;
+		return authUser;
 	}
 	
 	//회원가입
@@ -26,6 +26,15 @@ public class UserService {
 		System.out.println("userService.exejoin()");
 		
 		int count = userDao.userInsert(userVo);
+		
+		return count;
+	}
+	
+	//회원정보수정
+	public int exeModify(UserVo userVo) {
+		System.out.println("userService.exeModify()");
+		
+		int count = userDao.userUpdate(userVo);
 		
 		return count;
 	}

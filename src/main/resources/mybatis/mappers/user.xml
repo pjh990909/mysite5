@@ -5,20 +5,35 @@
 	
 	<!-- login -->
 	<select id="seletbyIdPw" parameterType="String" resultType="UserVo">
-		select no,
-			   id,
-			   password,
-       		   name,
-       		   gender
-		from users
-		where id = #{id} and password = #{password}
+		<![CDATA[
+			select no,
+				   id,
+				   password,
+	       		   name,
+	       		   gender
+			from users
+			where id = #{id} and password = #{password}
+		]]>
 	</select>
 	
 	<!-- join 회원가입 -->
 	<insert id="insert" >
-		INSERT INTO users
-		VALUES (null,#{id}, #{password},#{name},#{gender});
+		<![CDATA[
+			INSERT INTO users
+			VALUES (null,#{id}, #{password},#{name},#{gender})
+		]]>
 	</insert>
+	
+	<!-- modify 회원정보수정 -->
+	<update id="update" parameterType="UserVo">
+		<![CDATA[
+		update users
+		set password = #{password} ,
+			name = #{name},
+		    gender = #{gender}
+		where no = #{no} 
+		]]>
+	</update>
 	
 	
 </mapper>

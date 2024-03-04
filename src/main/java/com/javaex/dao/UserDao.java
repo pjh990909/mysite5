@@ -30,4 +30,12 @@ public class UserDao {
 		return count;
 	}
 	
+	public int userUpdate(UserVo userVo) {
+		System.out.println("userDao.userUpdate()");
+		
+		int count = sqlSession.update("user.update", userVo);
+		
+		return count;
+	}
+	
 }

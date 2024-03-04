@@ -1,6 +1,5 @@
 package com.javaex.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,24 +29,34 @@ public class UserController {
 	
 	//로그인
 	@RequestMapping(value="/login", method= {RequestMethod.GET, RequestMethod.POST})
-	public String login(HttpServletRequest request,HttpSession session,@ModelAttribute UserVo userVo) {
+	public String login(HttpSession session,@ModelAttribute UserVo userVo) {
 		System.out.println("UserController.login()");
 		
 		System.out.println(userVo);
 		
-		UserVo authuser = userService.exeLogin(userVo);
+		UserVo authUser = userService.exeLogin(userVo);
 		
-		if(authuser != null) {
-			session = request.getSession();
-			session.setAttribute("authuser", authuser);
+		if(authUser != null) {
+			
+			session.setAttribute("authUser", authUser);
 			return "redirect:/main";
 		}else {
 			
 			return "redirect:/user/loginForm";
 		}
 		
-		
 	}
+	
+	//로그아웃
+	@RequestMapping(value="/logout", method = {RequestMethod.GET, RequestMethod.POST})
+	public String logout(HttpSession session){
+		System.out.println("UserController.logout()");
+		
+		session.invalidate();
+		
+		return "redirect:/main";
+	}
+	
 	
 	//회원가입폼
 	@RequestMapping(value="/joinForm", method= {RequestMethod.GET, RequestMethod.POST})
@@ -61,6 +70,7 @@ public class UserController {
 	//회원가입
 	@RequestMapping(value="/join", method= {RequestMethod.GET, RequestMethod.POST})
 	public String join(@ModelAttribute UserVo userVo) {
+		System.out.println("UserController.join()");
 		
 		userService.exejoin(userVo);
 		
@@ -69,4 +79,21 @@ public class UserController {
 		return "user/joinOk";
 	}
 	
+	//회원정보수정폼
+	@RequestMapping(value="/mform", method= {RequestMethod.GET, RequestMethod.POST})
+	public String modifyForm() {
+		System.out.println("UserController.mform()");
+		
+		return "user/modifyForm";
+	}
+	
+	//회원정보수정
+	@RequestMapping(value="/modify", method= {RequestMethod.GET, RequestMethod.POST})
+	public String modify(@ModelAttribute UserVo userVo) {
+		System.out.println("UserController.modify()");
+		
+		userService.exeModify(userVo);
+		
+		return "redirect:/main";
+	}
 }
